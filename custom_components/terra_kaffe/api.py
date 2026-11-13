@@ -3,14 +3,13 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Callable
 import logging
 import time
+from collections.abc import Callable
 from typing import Any
 
 import aiohttp
 from aiohttp import ClientSession, ClientTimeout
-
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 

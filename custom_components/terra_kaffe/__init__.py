@@ -10,7 +10,12 @@ from .api import TerraKaffeAPI, TerraKaffeAPIError, TerraKaffeAuthError
 from .const import CONF_REFRESH_TOKEN, LOGGER
 from .coordinator import TerraKaffeConfigEntry, TerraKaffeDataUpdateCoordinator
 
-PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.BUTTON, Platform.SENSOR]
+PLATFORMS: list[Platform] = [
+    Platform.BINARY_SENSOR,
+    Platform.BUTTON,
+    Platform.SENSOR,
+    Platform.SWITCH,
+]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: TerraKaffeConfigEntry) -> bool:

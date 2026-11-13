@@ -178,6 +178,11 @@
       "device_id": {
         "name": "Device ID"
       }
+    },
+    "switch": {
+      "allow_remote_brewing": {
+        "name": "Allow remote brewing"
+      }
     }
   }
 }

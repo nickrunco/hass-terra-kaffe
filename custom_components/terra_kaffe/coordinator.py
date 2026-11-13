@@ -50,6 +50,10 @@ class TerraKaffeDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.api = api
         self.account_id = config_entry.data["account_id"]
         self.device_id = config_entry.data["device_id"]
+        # Remote-brew safety: monotonic deadline until which brewing is
+        # allowed. None = not armed. Never persisted, so a restart disarms.
+        self.brew_armed_until: float | None = None
+        self.brew_arm_switch: Any = None  # set by the switch platform
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch data from the API."""

@@ -127,6 +127,17 @@ If your credentials expire, you'll be prompted to reauthenticate. Simply follow 
 - **Cancel brew**: Stops the drink currently being made (only works while
   brewing, pre-warming, or paused)
 
+### Remote brewing
+
+- **Allow remote brewing** (switch): a safety arm, off by default. The machine
+  can't tell whether a cup is under the spout, so a drink can only be started
+  while this is on. It turns itself off after one drink is started, after 10
+  minutes, or when Home Assistant restarts.
+- **Brew \<drink name\>** (buttons): one per drink saved on the machine
+  (slots 1–10). Empty slots are disabled. Each button shows the recipe it will
+  send as an attribute. A drink only starts when the safety arm is on, the
+  machine is awake, and it's idle.
+
 ## Usage Examples
 
 ### Automation: Wake Machine Before Morning Routine
