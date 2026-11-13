@@ -111,4 +111,7 @@ BREWING_STATUS_ERROR = 5
 
 # Update intervals
 UPDATE_INTERVAL_CLOUD = 30  # seconds
-UPDATE_INTERVAL_BLE = 5  # seconds
+
+# Remote brewing safety
+BREW_ARM_TIMEOUT = 600  # seconds the "Allow remote brewing" switch stays on
+SAVED_DRINK_SLOTS = 10  # attributes 200-209

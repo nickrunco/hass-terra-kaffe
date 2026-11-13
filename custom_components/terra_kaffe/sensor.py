@@ -166,41 +166,19 @@ def parse_care_status(value: Any) -> str | None:
         status_int = int(value)
         if status_int == 0:
             return "OK"
-        # Parse bits - common maintenance flags
-        flags = []
-        if status_int & 0x01:
-            flags.append("Brew unit")
-        if status_int & 0x02:
-            flags.append("Descale")
-        if status_int & 0x04:
-            flags.append("Water filter")
-        if status_int & 0x08:
-            flags.append("Waste bin")
-        if status_int & 0x10:
-            flags.append("Other 1")
-        if status_int & 0x20:
-            flags.append("Other 2")
-        if status_int & 0x40:
-            flags.append("Other 3")
-        if status_int & 0x80:
-            flags.append("Other 4")
-        if status_int & 0x100:
-            flags.append("Other 5")
-        if status_int & 0x200:
-            flags.append("Other 6")
-        if status_int & 0x400:
-            flags.append("Other 7")
-        if status_int & 0x800:
-            flags.append("Drip tray")
-        if status_int & 0x40:
-            flags.append("Other 2")
-        if status_int & 0x80:
-            flags.append("Other 3")
-        # Check higher bits
-        if status_int & 0x100:
-            flags.append("Other 4")
-        if status_int & 0x200:
-            flags.append("Other 5")
+        # Known bits; anything else is reported as "Other (bit N)".
+        known = {
+            0: "Brew unit",
+            1: "Descale",
+            2: "Water filter",
+            3: "Waste bin",
+            11: "Drip tray",
+        }
+        flags = [
+            known.get(bit, f"Other (bit {bit})")
+            for bit in range(status_int.bit_length())
+            if status_int & (1 << bit)
+        ]
         if flags:
             return ", ".join(flags)
         return f"Status: {status_int} (0x{status_int:X})"
