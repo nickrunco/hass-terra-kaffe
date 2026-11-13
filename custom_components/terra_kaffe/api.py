@@ -283,13 +283,21 @@ class TerraKaffeAPI:
         in an ``attribute_write`` request.
         """
         _LOGGER.debug("Setting attribute %s on device %s", attribute_id, device_id)
-        await self._request(
+        result = await self._request(
             "POST",
             f"/v1/accounts/{account_id}/devices/{device_id}/requests",
             json=[
                 {"type": "attribute_write", "attrId": attribute_id, "value": str(value)}
             ],
         )
+        # Afero answers 202 with a per-request status list; surface failures.
+        if isinstance(result, list):
+            for item in result:
+                status = str(item.get("status", "SUCCESS")).upper()
+                if status not in ("SUCCESS", "ACCEPTED", "QUEUED", "PENDING"):
+                    raise TerraKaffeAPIError(
+                        f"Machine rejected write to attribute {attribute_id}: {item}"
+                    )
 
     async def async_test_connection(self) -> bool:
         """Test the API connection."""

@@ -58,6 +58,9 @@
     "button": {
       "power": {
         "name": "Power"
+      },
+      "cancel_brew": {
+        "name": "Cancel brew"
       }
     },
     "sensor": {

@@ -124,6 +124,8 @@ If your credentials expire, you'll be prompted to reauthenticate. Simply follow 
 - **Power**: Toggle device wake/sleep state
   - If the device is awake, pressing this will put it to sleep
   - If the device is sleeping, pressing this will wake it up
+- **Cancel brew**: Stops the drink currently being made (only works while
+  brewing, pre-warming, or paused)
 
 ## Usage Examples
 
