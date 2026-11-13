@@ -11,7 +11,13 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 
 from .api import TerraKaffeAPI, TerraKaffeAPIError, TerraKaffeAuthError
-from .const import CONF_REFRESH_TOKEN, DOMAIN, LOGGER
+from .const import (
+    ATTR_BREWING_STATUS,
+    CONF_REFRESH_TOKEN,
+    DOMAIN,
+    LOGGER,
+    TK02_PROFILE_ID,
+)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
@@ -19,6 +25,29 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
         vol.Required(CONF_PASSWORD): str,
     }
 )
+
+
+def is_coffee_machine(device: dict[str, Any]) -> bool:
+    """Return True if an Afero device looks like a Terra Kaffe machine.
+
+    Afero accounts also contain hubs (including phones running the app),
+    which must not be offered as machines.
+    """
+    if device.get("profileId") == TK02_PROFILE_ID:
+        return True
+    attributes = device.get("attributes") or []
+    return any(
+        isinstance(attr, dict) and attr.get("id") == ATTR_BREWING_STATUS
+        for attr in attributes
+    )
+
+
+def device_label(device: dict[str, Any]) -> str:
+    """Human-readable label for the device picker."""
+    device_id = str(device.get("deviceId", "unknown"))
+    name = device.get("friendlyName") or device.get("name") or "Terra Kaffe"
+    kind = "coffee machine" if is_coffee_machine(device) else "hub / other device"
+    return f"{name} ({kind}, {device_id[:8]})"
 
 
 async def validate_credentials(
@@ -39,7 +68,18 @@ async def validate_credentials(
             raise CannotConnect("Invalid account data")
 
         # Get devices for the account
-        devices = await api.async_get_devices(account_id)
+        all_devices = await api.async_get_devices(account_id)
+        LOGGER.debug(
+            "Afero devices: %s",
+            [
+                (d.get("deviceId"), d.get("profileId"), d.get("friendlyName"))
+                for d in all_devices
+            ],
+        )
+        devices = [d for d in all_devices if is_coffee_machine(d)]
+        if not devices:
+            # Couldn't recognise any machine: show everything, clearly labelled.
+            devices = all_devices
         if not devices:
             raise CannotConnect("No devices found")
 
@@ -120,12 +160,7 @@ class TerraKaffeConfigFlow(ConfigFlow, domain=DOMAIN):
 
         # Build device selection schema
         device_options = {
-            device.get("deviceId"): (
-                device.get("friendlyName")
-                or device.get("name")
-                or f"Terra Kaffe {device.get('deviceId', 'unknown')[:8]}"
-            )
-            for device in self._devices
+            device.get("deviceId"): device_label(device) for device in self._devices
         }
 
         return self.async_show_form(

@@ -18,6 +18,9 @@ AFERO_TOKEN_URL = f"{AFERO_AUTH_URL}/auth/realms/tkf/protocol/openid-connect/tok
 # Terra Kaffe middleware API (for bootstrap/news, not used for device access)
 TERRA_KAFFE_API_URL = "https://api.terrakaffeservices.com/api"
 
+# Afero device profiles (from the API notes)
+TK02_PROFILE_ID = "587e0ef9-a173-43d5-8590-ff13f79ec113"
+
 # Configuration keys
 CONF_REFRESH_TOKEN = "refresh_token"
 
