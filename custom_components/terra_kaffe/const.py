@@ -111,4 +111,3 @@ BREWING_STATUS_ERROR = 5
 
 # Update intervals
 UPDATE_INTERVAL_CLOUD = 30  # seconds
-UPDATE_INTERVAL_BLE = 5  # seconds

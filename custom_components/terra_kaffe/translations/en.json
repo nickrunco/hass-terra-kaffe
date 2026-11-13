@@ -1,39 +1,40 @@
 {
   "config": {
-    "abort": {
-      "already_configured": "This device is already configured",
-      "reauth_successful": "Re-authentication was successful"
+    "step": {
+      "user": {
+        "title": "Terra Kaffe login",
+        "description": "Enter your Terra Kaffe account credentials. These are the same credentials you use in the Terra Kaffe mobile app.",
+        "data": {
+          "username": "Email",
+          "password": "Password"
+        }
+      },
+      "device": {
+        "title": "Select device",
+        "description": "Select the Terra Kaffe machine you want to add.",
+        "data": {
+          "device_id": "Device"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate",
+        "description": "Your Terra Kaffe session could not be renewed. Please re-enter your credentials.",
+        "data": {
+          "username": "Email",
+          "password": "Password"
+        }
+      }
     },
     "error": {
       "cannot_connect": "Unable to connect to Terra Kaffe. Please check your internet connection.",
       "invalid_auth": "Invalid email or password",
       "invalid_device": "Invalid device selected",
-      "unknown": "Unexpected error occurred"
+      "unknown": "Unexpected error occurred",
+      "wrong_account": "Those credentials belong to a different Terra Kaffe account than the one this machine was set up with."
     },
-    "step": {
-      "device": {
-        "data": {
-          "device_id": "Device"
-        },
-        "description": "Select the Terra Kaffe machine you want to add.",
-        "title": "Select device"
-      },
-      "reauth_confirm": {
-        "data": {
-          "password": "Password",
-          "username": "Email"
-        },
-        "description": "Your Terra Kaffe session has expired. Please re-enter your credentials.",
-        "title": "Re-authenticate"
-      },
-      "user": {
-        "data": {
-          "password": "Password",
-          "username": "Email"
-        },
-        "description": "Enter your Terra Kaffe account credentials. These are the same credentials you use in the Terra Kaffe mobile app.",
-        "title": "Terra Kaffe login"
-      }
+    "abort": {
+      "already_configured": "This device is already configured",
+      "reauth_successful": "Re-authentication was successful"
     }
   },
   "entity": {
@@ -41,11 +42,11 @@
       "locked": {
         "name": "Locked"
       },
-      "preground_selected": {
-        "name": "Pre-ground coffee"
-      },
       "screen_saver_enabled": {
         "name": "Screen saver"
+      },
+      "preground_selected": {
+        "name": "Pre-ground coffee"
       },
       "wifi_enabled": {
         "name": "WiFi"
@@ -60,41 +61,23 @@
       }
     },
     "sensor": {
-      "bean_level": {
-        "name": "Bean level"
-      },
-      "bootloader_version": {
-        "name": "Bootloader version"
-      },
-      "brewing_progress": {
-        "name": "Brewing progress"
+      "device_status": {
+        "name": "Status"
       },
       "brewing_status": {
         "name": "Brewing status"
       },
-      "care_status": {
-        "name": "Care status"
-      },
-      "clean_brew_unit": {
-        "name": "Brew unit cleaning"
+      "brewing_progress": {
+        "name": "Brewing progress"
       },
       "coffee_order": {
         "name": "Coffee order"
       },
-      "current_espresso_profile": {
-        "name": "Espresso profile"
-      },
-      "descale_status": {
-        "name": "Descale"
-      },
-      "device_id": {
-        "name": "Device ID"
-      },
-      "device_status": {
-        "name": "Status"
-      },
       "drink_history": {
         "name": "Drink history"
+      },
+      "current_espresso_profile": {
+        "name": "Espresso profile"
       },
       "drink_order_error": {
         "name": "Drink order error"
@@ -102,59 +85,32 @@
       "drink_order_received": {
         "name": "Drink order received"
       },
-      "espresso_shots": {
-        "name": "Espresso shots"
+      "bean_level": {
+        "name": "Bean level"
       },
-      "firmware_version": {
-        "name": "Firmware version"
-      },
-      "friendly_name": {
-        "name": "Friendly name"
-      },
-      "grind_setting": {
-        "name": "Grind setting"
-      },
-      "language": {
-        "name": "Language"
-      },
-      "maintenance_performed": {
-        "name": "Maintenance performed"
-      },
-      "model": {
-        "name": "Model"
-      },
-      "os_version": {
-        "name": "OS version"
-      },
-      "profile_version": {
-        "name": "Profile version"
-      },
-      "screen_brightness": {
-        "name": "Screen brightness"
-      },
-      "serial_number": {
-        "name": "Serial number"
-      },
-      "stats": {
-        "name": "Statistics"
-      },
-      "time_format": {
-        "name": "Time format"
-      },
-      "time_zone": {
-        "name": "Time zone"
+      "waste_bin_level": {
+        "name": "Waste bin level"
       },
       "total_cups": {
         "name": "Total cups"
       },
-      "wake_drink": {
-        "name": "Wake-up drink"
+      "espresso_shots": {
+        "name": "Espresso shots"
+      },
+      "stats": {
+        "name": "Statistics"
+      },
+      "clean_brew_unit": {
+        "name": "Brew unit cleaning"
+      },
+      "descale_status": {
+        "name": "Descale"
+      },
+      "water_filter": {
+        "name": "Water filter"
       },
       "waste_bin_count": {
         "name": "Waste bin"
-      },
-      "waste_bin_level": {
-        "name": "Waste bin level"
       },
       "drip_tray": {
         "name": "Drip tray"
@@ -162,17 +118,62 @@
       "rinse_milk": {
         "name": "Rinse milk"
       },
-      "water_filter": {
-        "name": "Water filter"
+      "care_status": {
+        "name": "Care status"
+      },
+      "maintenance_performed": {
+        "name": "Maintenance performed"
+      },
+      "grind_setting": {
+        "name": "Grind setting"
       },
       "water_hardness": {
         "name": "Water hardness"
       },
-      "wifi_signal": {
-        "name": "WiFi signal"
+      "language": {
+        "name": "Language"
+      },
+      "time_zone": {
+        "name": "Time zone"
+      },
+      "time_format": {
+        "name": "Time format"
+      },
+      "screen_brightness": {
+        "name": "Screen brightness"
+      },
+      "wake_drink": {
+        "name": "Wake-up drink"
+      },
+      "friendly_name": {
+        "name": "Friendly name"
+      },
+      "serial_number": {
+        "name": "Serial number"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "os_version": {
+        "name": "OS version"
+      },
+      "firmware_version": {
+        "name": "Firmware version"
+      },
+      "bootloader_version": {
+        "name": "Bootloader version"
+      },
+      "profile_version": {
+        "name": "Profile version"
       },
       "wifi_ssid": {
         "name": "WiFi network"
+      },
+      "wifi_signal": {
+        "name": "WiFi signal"
+      },
+      "device_id": {
+        "name": "Device ID"
       }
     }
   }

@@ -178,22 +178,16 @@ class TerraKaffeConfigFlow(ConfigFlow, domain=DOMAIN):
         """Handle reauthentication confirmation."""
         errors: dict[str, str] = {}
 
+        reauth_entry = self._get_reauth_entry()
+
         if user_input is not None:
-            reauth_entry = self._get_reauth_entry()
             try:
                 api = TerraKaffeAPI(self.hass)
                 await api.async_login(
                     user_input[CONF_USERNAME], user_input[CONF_PASSWORD]
                 )
-
-                return self.async_update_reload_and_abort(
-                    reauth_entry,
-                    data_updates={
-                        CONF_USERNAME: user_input[CONF_USERNAME],
-                        CONF_PASSWORD: user_input[CONF_PASSWORD],
-                        CONF_REFRESH_TOKEN: api.refresh_token,
-                    },
-                )
+                accounts = await api.async_get_accounts()
+                account_id = accounts[0]["accountId"] if accounts else None
             except TerraKaffeAuthError:
                 errors["base"] = "invalid_auth"
             except TerraKaffeAPIError:
@@ -201,10 +195,25 @@ class TerraKaffeConfigFlow(ConfigFlow, domain=DOMAIN):
             except Exception:  # noqa: BLE001
                 LOGGER.exception("Unexpected exception")
                 errors["base"] = "unknown"
+            else:
+                if account_id != reauth_entry.data.get("account_id"):
+                    errors["base"] = "wrong_account"
+                else:
+                    return self.async_update_reload_and_abort(
+                        reauth_entry,
+                        data_updates={
+                            CONF_USERNAME: user_input[CONF_USERNAME],
+                            CONF_PASSWORD: user_input[CONF_PASSWORD],
+                            CONF_REFRESH_TOKEN: api.refresh_token,
+                        },
+                    )
 
         return self.async_show_form(
             step_id="reauth_confirm",
-            data_schema=STEP_USER_DATA_SCHEMA,
+            data_schema=self.add_suggested_values_to_schema(
+                STEP_USER_DATA_SCHEMA,
+                {CONF_USERNAME: reauth_entry.data.get(CONF_USERNAME)},
+            ),
             errors=errors,
         )
 

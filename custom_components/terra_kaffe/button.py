@@ -7,6 +7,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
+from .api import TerraKaffeAPIError
 from .const import (
     ATTR_DEVICE_STATUS,
     DEVICE_STATUS_GOING_TO_WAKE,
@@ -72,10 +73,13 @@ class TerraKaffePowerButton(TerraKaffeEntity, ButtonEntity):
         else:
             target_status = DEVICE_STATUS_WAKE
 
-        await self.coordinator.api.async_set_attribute(
-            self.coordinator.account_id,
-            self.coordinator.device_id,
-            ATTR_DEVICE_STATUS,
-            target_status,
-        )
+        try:
+            await self.coordinator.api.async_set_attribute(
+                self.coordinator.account_id,
+                self.coordinator.device_id,
+                ATTR_DEVICE_STATUS,
+                target_status,
+            )
+        except TerraKaffeAPIError as err:
+            raise HomeAssistantError(f"Could not change power state: {err}") from err
         await self.coordinator.async_request_refresh()

@@ -18,7 +18,7 @@
       },
       "reauth_confirm": {
         "title": "Re-authenticate",
-        "description": "Your Terra Kaffe session has expired. Please re-enter your credentials.",
+        "description": "Your Terra Kaffe session could not be renewed. Please re-enter your credentials.",
         "data": {
           "username": "Email",
           "password": "Password"
@@ -29,7 +29,8 @@
       "cannot_connect": "Unable to connect to Terra Kaffe. Please check your internet connection.",
       "invalid_auth": "Invalid email or password",
       "invalid_device": "Invalid device selected",
-      "unknown": "Unexpected error occurred"
+      "unknown": "Unexpected error occurred",
+      "wrong_account": "Those credentials belong to a different Terra Kaffe account than the one this machine was set up with."
     },
     "abort": {
       "already_configured": "This device is already configured",

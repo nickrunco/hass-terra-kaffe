@@ -22,7 +22,7 @@ Home Assistant integration for Terra Kaffe coffee machines (TK-02 model). This i
 2. Go to HACS → Integrations
 3. Click the three dots (⋮) in the top right corner
 4. Select "Custom repositories"
-5. Add this repository URL: `https://github.com/daniel/homeassistant-terra-kaffe`
+5. Add this repository URL: `https://github.com/nickrunco/hass-terra-kaffe`
 6. Select category "Integration"
 7. Click "Add"
 8. Search for "Terra Kaffe" in HACS
@@ -241,12 +241,25 @@ For detailed API documentation, see [API_DOCUMENTATION.md](custom_components/ter
 
 ## Support
 
-- **Issues**: Report issues on the [GitHub Issues](https://github.com/daniel/homeassistant-terra-kaffe/issues) page
+- **Issues**: Report issues on the [GitHub Issues](https://github.com/nickrunco/hass-terra-kaffe/issues) page
 - **Feature Requests**: Submit feature requests via GitHub Issues
+
+## Credits
+
+Forked from [bassrock/hass-terra-kaffe](https://github.com/bassrock/hass-terra-kaffe).
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Security notes
+
+- Your Terra Kaffe email and password are stored in Home Assistant's config entry
+  (`.storage/core.config_entries`) so the integration can log in again when its
+  session expires. Anyone with access to your HA config or backups can read them,
+  so use a password you don't use anywhere else.
+- Authentication goes directly to Afero's OAuth server (the same one the official
+  app uses), impersonating the Android app's public client ID.
 
 ## License
 

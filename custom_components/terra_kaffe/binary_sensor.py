@@ -138,8 +138,4 @@ class TerraKaffeBinarySensor(TerraKaffeEntity, BinarySensorEntity):
             return None
         attributes = self.coordinator.data.get("attributes", {})
         value = attributes.get(self.entity_description.attr_id)
-        result = self.entity_description.value_fn(value)
-        # For drip tray, invert logic: True means needs cleaning (sensor is ON)
-        if self.entity_description.key == "drip_tray_needs_cleaning":
-            return result
-        return result
+        return self.entity_description.value_fn(value)
